@@ -7,17 +7,23 @@ import Vuerouter from 'vue-router'
 
 Vue.use(Vuerouter)
 
-const routes = [
-    {
+const routes = [{
         path: '/',
-        name: 'Home',
-        component: () => import('@/views/Home.vue'),
+        name: 'Main',
+        component: () => import('@/views/Main.vue'),
+        children: [{
+                path: '/home',
+                name: 'home',
+                component: () => import('@/views/Home')
+            },
+            {
+                path: '/user',
+                name: 'user',
+                component: () => import('@/views/User')
+            }
+        ]
     },
-    {
-        path: '/user',
-        name: 'User',
-        component: () => import('@/views/User.vue')
-    }
+
 ]
 
 const router = new Vuerouter({

@@ -1,13 +1,15 @@
 <template>
-  <div>user</div>
+  <div>
+      我是header组件
+  </div>
 </template>
 
 <script>
 export default {
-
+    name:"CommonHeader"
 }
 </script>
 
 <style>
-
+    
 </style>
