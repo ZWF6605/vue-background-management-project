@@ -1,4 +1,5 @@
 <template>
+  <!-- 菜单栏 -->
   <el-menu
     default-active="1-4-1"
     class="el-menu-vertical-demo"
@@ -9,42 +10,47 @@
     text-color="#fff"
     active-text-color="#ffd04b"
   >
-    <h3>通用后台管理系统</h3>
+    <!-- logo -->
+    <h3>{{ isCollapse ? "后台" : "通用后台管理系统" }}</h3>
+
+    <!-- 遍历没有子路由的数组并展示出来（path为唯一标识） -->
     <el-menu-item
-      v-for="(item, index) in noChildren"
-      :key="index + '1'"
-      :index="item.path + '1'"
+      v-for="item in noChildren"
+      :key="item.path"
+      :index="item.path + ''"
       @click="clickMenu(item)"
     >
       <i :class="'el-icon-' + item.icon"></i>
       <span slot="title">{{ item.label }}</span>
     </el-menu-item>
+
+    <!-- 遍历有子路由的数组并展示出来（path为唯一标识） -->
     <el-submenu
-      v-for="(item, index) in hasChildren"
-      :key="index + '2'"
-      :index="item.path + '2'"
+      v-for="item in hasChildren"
+      :key="item.path"
+      :index="item.path + ''"
     >
       <template slot="title">
         <i :class="'el-icon-' + item.icon"></i>
         <span slot="title">{{ item.label }}</span>
       </template>
+      <!-- 遍历子路由里的数组并展示出来 -->
       <el-menu-item-group
         v-for="(subItem, subIndex) in item.children"
         :key="subIndex"
       >
-        <el-menu-item :index="subItem.subIndex + ''">{{
-          subItem.label
-        }}</el-menu-item>
+        <el-menu-item :index="subIndex + ''">{{ subItem.label }}</el-menu-item>
       </el-menu-item-group>
     </el-submenu>
   </el-menu>
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      isCollapse: false,
+      //
       menu: [
         {
           path: "/",
@@ -93,6 +99,7 @@ export default {
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
+      console.log(this);
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
@@ -105,20 +112,20 @@ export default {
         this.$router.push({
           path: item.name,
         });
-
-      // .catch((err) => {
-      //   console.log(err);
-      // });
     },
   },
   computed: {
-    // 筛选没有子路由的数组
+    // 筛选并返回没有子路由的数组
     noChildren() {
       return this.menu.filter((item) => !item.children);
     },
-    // 筛选有子路由的数组
+    // 筛选并返回有子路由的数组
     hasChildren() {
       return this.menu.filter((item) => item.children);
+    },
+    // 侧边栏是否打开
+    isCollapse() {
+      return this.$store.state.tab.isCollapse;
     },
   },
 };
