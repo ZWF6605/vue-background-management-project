@@ -1,7 +1,6 @@
 <template>
   <!-- 菜单栏 -->
   <el-menu
-    default-active="1-4-1"
     class="el-menu-vertical-demo"
     @open="handleOpen"
     @close="handleClose"
@@ -39,14 +38,15 @@
         v-for="(subItem, subIndex) in item.children"
         :key="subIndex"
       >
-        <el-menu-item :index="subIndex + ''">{{ subItem.label }}</el-menu-item>
+        <el-menu-item :index="subIndex + ''" @click="clickMenu(subItem)">{{
+          subItem.label
+        }}</el-menu-item>
       </el-menu-item-group>
     </el-submenu>
   </el-menu>
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -107,11 +107,13 @@ export default {
     // 跳转目标路由
     clickMenu(item) {
       // 加层判断，避免重复push到同一个页面
-      if (this.$route.path === item.path)
+      if (this.$route.path !== item.path) {
         // 判断当前页面是不是等于item数组传下来的path
         this.$router.push({
           path: item.name,
         });
+        this.$store.commit('selectMenu',item)
+      }
     },
   },
   computed: {

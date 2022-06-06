@@ -19,7 +19,10 @@ import {
   Col,
   Card,
   Table,
-  TableColumn
+  TableColumn,
+  Breadcrumb,
+  BreadcrumbItem,
+  Tag
 } from 'element-ui'
 // 引入element-ui样式
 import 'element-ui/lib/theme-chalk/index.css'
@@ -55,6 +58,11 @@ Vue.use(Col)
 Vue.use(Card)
 Vue.use(Table)
 Vue.use(TableColumn)
+Vue.use(Breadcrumb)
+Vue.use(BreadcrumbItem)
+Vue.use(Tag)
+
+
 
 Vue.prototype.$axios = axios
 new Vue({
