@@ -22,7 +22,15 @@ import {
   TableColumn,
   Breadcrumb,
   BreadcrumbItem,
-  Tag
+  Tag,
+  Form,
+  FormItem,
+  Input,
+  Select,
+  Option,
+  Switch,
+  DatePicker,
+  Dialog
 } from 'element-ui'
 // 引入element-ui样式
 import 'element-ui/lib/theme-chalk/index.css'
@@ -61,6 +69,16 @@ Vue.use(TableColumn)
 Vue.use(Breadcrumb)
 Vue.use(BreadcrumbItem)
 Vue.use(Tag)
+Vue.use(Form)
+Vue.use(FormItem)
+Vue.use(Input)
+Vue.use(Select)
+Vue.use(Option)
+Vue.use(Switch)
+Vue.use(DatePicker)
+Vue.use(Dialog)
+
+
 
 
 
