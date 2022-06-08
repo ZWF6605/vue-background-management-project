@@ -50,7 +50,7 @@ export default {
     },
     handleDelete(row) {
       this.$emit("del", row);
-      console.log(this);
+      console.log(scope.row);
     },
     changePage(page) {
       this.$emit("changePage", page);

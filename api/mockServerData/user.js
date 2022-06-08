@@ -41,7 +41,7 @@ export default {
    */
   getUserList: config => {
     const { name, page = 1, limit = 20 } = param2Obj(config.url)
-    console.log('name:' + name, 'page:' + page, '分页大小limit:' + limit)
+    // console.log('name:' + name, 'page:' + page, '分页大小limit:' + limit)
     const mockList = List.filter(user => {
       if (name && user.name.indexOf(name) === -1 && user.addr.indexOf(name) === -1) return false
       return true

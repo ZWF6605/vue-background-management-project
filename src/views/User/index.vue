@@ -162,17 +162,17 @@ export default {
     editUser(row) {
       this.operateType = "edit";
       this.isShow = true;
-      this.operateForm = row;
+      this.operateForm = {...row};
     },
     delUser(row) {
       this.$confirm("此操作将永久删除该行数据，是否删除？", "提示", {
         confirmButtonText: "确认",
-        confirmButtonText: "取消",
+        cancelButtonText: "取消",
         type: "warning",
       }).then(() => {
         const id = row.id;
         this.$axios
-          .post("user/del", {
+          .get("user/del", {
             params: { id },
           })
           .then(() => {
@@ -182,12 +182,17 @@ export default {
             });
             this.getList();
             
+          }).catch(()=>{
+            this.$message({
+              type: "info",
+              message: "已取消删除",
+            });
           });
       });
     },
-    changePage(){
-      console.log('load')
-    },
+    // changePage(){
+    //   console.log('load')
+    // },
     getList(name = "") {
       this.config.loading = true;
       name ? (this.config.page = 1) : "";
@@ -203,6 +208,7 @@ export default {
         this.config.total = res.data.count;
         this.config.loading = false;
       });
+      // console.log(getUser);
     },
   },
   created() {
