@@ -35,10 +35,19 @@ export default {
 </script>
 
 <style lang="less">
+.flex-design {
+display: flex;
+  flex-direction: column;
+}
 .el-header {
   background: #333;
 }
 .el-main {
+  .flex-design();
   padding-top: 0;
+  .manage{
+    flex:1;
+    .flex-design();
+  }
 }
 </style>

@@ -24,17 +24,26 @@
         :inline="true"
         ref="form"
       >
-        <el-button type="primary" @click="getList">搜索</el-button>
+        <el-button type="primary" @click="getList(searchForm.keyword)">搜索</el-button>
       </common-form>
     </div>
+    <common-table
+      :tableData="tableData"
+      :tableLabel="tableLabel"
+      :config="config"
+      @edit="editUser"
+      @del="delUser"
+      @changePage="getList()"
+    ></common-table>
   </div>
 </template>
 
 <script>
-import CommonForm from "../../components/CommonForm.vue";
-
+import CommonTable from "@/components/CommonTable.vue";
+import CommonForm from "@/components/CommonForm.vue";
+import {getUser} from "../../../api/data.js";
 export default {
-  components: { CommonForm },
+  components: { CommonForm,CommonTable },
   name: "user",
   data() {
     return {
@@ -94,19 +103,118 @@ export default {
       searchForm: {
         keyword: "",
       },
+      tableData: [],
+      tableLabel: [
+        {
+          prop: "name",
+          key:"name",
+          label: "姓名",
+        },
+        {
+          prop: "age",
+          label: "年龄",
+          key:"age",
+        },
+        {
+          prop: "sexLabel",
+          label: "性别",
+          key:"sex",
+        },
+        {
+          prop: "birth",
+          label: "出生日期",
+          width: 200,
+          key:"birth",
+        },
+        {
+          prop: "addr",
+          label: "地址",
+          width: 320,
+          key:"addr",
+        },
+      ],
+      config: {
+        page: 1,
+        total: 0,
+      },
     };
   },
   methods: {
-    confirm() {},
+    confirm() {
+      if (this.operateType === "edit") {
+        this.$axios.post("/user/edit", this.operateForm).then((res) => {
+          console.log(res);
+          this.isShow = false;
+          this.getList();
+        });
+      } else {
+        this.$axios.post("/user/add", this.operateForm).then((res) => {
+          this.isShow = false;
+          this.getList();
+        });
+      }
+    },
     addUser() {
       this.isShow = true;
       this.operateType = "add";
       this.operateForm = { name: "", addr: "", age: "", birth: "", sex: "" };
     },
-    getList() {},
+    editUser(row) {
+      this.operateType = "edit";
+      this.isShow = true;
+      this.operateForm = row;
+    },
+    delUser(row) {
+      this.$confirm("此操作将永久删除该行数据，是否删除？", "提示", {
+        confirmButtonText: "确认",
+        confirmButtonText: "取消",
+        type: "warning",
+      }).then(() => {
+        const id = row.id;
+        this.$axios
+          .post("user/del", {
+            params: { id },
+          })
+          .then(() => {
+            this.$message({
+              type: "success",
+              message: "删除成功",
+            });
+            this.getList();
+            
+          });
+      });
+    },
+    changePage(){
+      console.log('load')
+    },
+    getList(name = "") {
+      this.config.loading = true;
+      name ? (this.config.page = 1) : "";
+      getUser({
+        page: this.config.page,
+        name,
+      }).then(res => {
+        this.tableData = res.data.list.map(item => {
+          item.sexLabel = item.sex === 0 ? "女" : "男";
+          return item;
+        });
+        console.log(res)
+        this.config.total = res.data.count;
+        this.config.loading = false;
+      });
+    },
+  },
+  created() {
+    this.getList();
   },
 };
 </script>
 
-<style>
+<style lang="less" scoped>
+.manage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 </style>

@@ -30,7 +30,10 @@ import {
   Option,
   Switch,
   DatePicker,
-  Dialog
+  Dialog,
+  Pagination,
+  MessageBox,
+  Message
 } from 'element-ui'
 // 引入element-ui样式
 import 'element-ui/lib/theme-chalk/index.css'
@@ -77,10 +80,12 @@ Vue.use(Option)
 Vue.use(Switch)
 Vue.use(DatePicker)
 Vue.use(Dialog)
+Vue.use(Pagination)
 
 
 
-
+Vue.prototype.$message = Message
+Vue.prototype.$confirm = MessageBox.confirm
 
 Vue.prototype.$axios = axios
 new Vue({
