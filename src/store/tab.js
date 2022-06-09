@@ -1,5 +1,5 @@
 import Cookie from "js-cookie"
-import router from "@/router"
+// import router from "@/router"
 export default {
     state: {
         isCollapse: false, // 侧边栏是否展开属性
@@ -40,32 +40,33 @@ export default {
             state.menu = []
             Cookie.remove('menu')
         },
-        addMenu(state, _router) {
+        addMenu(state, router) {
             if (!Cookie.get('menu')) {
                 return
             }
             const menu = JSON.parse(Cookie.get('menu'))
-
             state.menu = menu
             const menuArray = []
+            // 判断是否有children，并给每个路由添加component属性
             menu.forEach(item => {
                 if (item.children) {
+                    console.log(item);
                     item.children = item.children.map(item => {
-                        item.component =
-                            () =>  import(`@/${item.url}`)
+                        item.component = () => import(`../views/${item.url}`)
                         return item
                     })
                     menuArray.push(...item.children)
                 } else {
-                    item.component = () => import(`@/${item.url}`)
+                    console.log(item);
+                    item.component = () => import(`../views/${item.url}`)
                     menuArray.push(item)
                 }
             });
 
-            console.log(menuArray);
+            // console.log(menuArray);
             // 路由的动态添加
             menuArray.forEach(item => {
-                router.addRoute("home", item)
+                router.addRoute("Main", item)
             })
         }
     }

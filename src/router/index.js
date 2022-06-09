@@ -9,16 +9,11 @@ Vue.use(Vuerouter)
 
 const routes = [
     {
-        name: 'home',
+        path: '/',
+        name: 'Main',
         component: () => import('@/views/Main.vue'),
-        path: '/home',
-    },
-    // {
-    //     path: '/',
-        // name: 'Main',
-        // component: () => import('@/views/Main.vue'),
-        // redirect:'/home',
-    //     children: [
+        redirect:'/login',
+        children: [
     //     //    {
     //     //         path: '/home',
     //     //         name: 'home',
@@ -44,11 +39,7 @@ const routes = [
     //     //         name: 'page2',
     //     //         component: () => import('@/views/Other/PageTwo')
     //     //     },
-    //     ]
-    // },
-    {
-        path: '/',
-        redirect:'/login',
+        ]
     },
     {
         path:'/login',

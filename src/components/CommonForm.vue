@@ -17,7 +17,7 @@
       <el-date-picker
         v-if="item.type === 'date'"
         type="date"
-        value-format="yyyy-MM-DD"
+        value-format="YYYY-MM-DD"
         placeholder="请选择日期"
         v-model="form[item.model]"
       ></el-date-picker>

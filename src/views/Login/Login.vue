@@ -66,13 +66,13 @@ export default {
   methods: {
     login() {
       getMenu(this.form).then((res) => {
-        console.log(res, "res");
+        // console.log(res, "res");
         if (res.data.code === 20000) {
           this.$store.commit("clearMenu");
           this.$store.commit("setMenu", res.data.data.menu);
           this.$store.commit("setToken", res.data.data.token);
-          this.$store.commit("addMenu");
-          this.$router.push("/home");
+          this.$store.commit("addMenu",this.$router);
+          this.$router.push({name:'home'});
         } else {
           this.$message.warning(res.data.data.message);
         }
