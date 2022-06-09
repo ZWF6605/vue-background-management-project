@@ -81,13 +81,23 @@ Vue.use(Switch)
 Vue.use(DatePicker)
 Vue.use(Dialog)
 Vue.use(Pagination)
-
-
-
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm
 
 Vue.prototype.$axios = axios
+
+router.beforeEach((to, from, next) => {
+  store.commit('getToken')
+  const token = store.state.user.token
+  if (!token && to.name !== 'login') {
+    next({
+      name: 'login'
+    })
+  }else{
+    next()
+  }
+})
+
 new Vue({
   store,
   router,

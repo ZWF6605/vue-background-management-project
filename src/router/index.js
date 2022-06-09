@@ -7,42 +7,53 @@ import Vuerouter from 'vue-router'
 
 Vue.use(Vuerouter)
 
-const routes = [{
-        path: '/',
-        name: 'Main',
+const routes = [
+    {
+        name: 'home',
         component: () => import('@/views/Main.vue'),
-        redirect:'/home',
-        children: [{
-                path: '/home',
-                name: 'home',
-                component: () => import('@/views/Home')
-            },
-            {
-                path: '/user',
-                name: 'user',
-                component: () => import('@/views/User')
-            },
-            {
-                path: '/mall',
-                name: 'mall',
-                component: () => import('@/views/Mall')
-            },
-            {
-                path: '/page1',
-                name: 'page1',
-                component: () => import('@/views/Other/PageOne')
-            },
-            {
-                path: '/page2',
-                name: 'page2',
-                component: () => import('@/views/Other/PageTwo')
-            },
-        ]
+        path: '/home',
+    },
+    // {
+    //     path: '/',
+        // name: 'Main',
+        // component: () => import('@/views/Main.vue'),
+        // redirect:'/home',
+    //     children: [
+    //     //    {
+    //     //         path: '/home',
+    //     //         name: 'home',
+    //     //         component: () => import('@/views/Home')
+    //     //     },
+    //     //     {
+    //     //         path: '/user',
+    //     //         name: 'user',
+    //     //         component: () => import('@/views/User')
+    //     //     },
+    //     //     {
+    //     //         path: '/mall',
+    //     //         name: 'mall',
+    //     //         component: () => import('@/views/Mall')
+    //     //     },
+    //     //     {
+    //     //         path: '/page1',
+    //     //         name: 'page1',
+    //     //         component: () => import('@/views/Other/PageOne')
+    //     //     },
+    //     //     {
+    //     //         path: '/page2',
+    //     //         name: 'page2',
+    //     //         component: () => import('@/views/Other/PageTwo')
+    //     //     },
+    //     ]
+    // },
+    {
+        path: '/',
+        redirect:'/login',
     },
     {
         path:'/login',
         name:'login',
-        // component:()=>import
+        component:()=>import('@/views/Login/Login.vue')
     }
 
 ]

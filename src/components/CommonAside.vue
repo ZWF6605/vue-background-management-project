@@ -51,49 +51,7 @@ export default {
   data() {
     return {
       //
-      menu: [
-        {
-          path: "/",
-          name: "home",
-          label: "首页",
-          icon: "s-home",
-          url: "Home/Home",
-        },
-        {
-          path: "/mall",
-          name: "mall",
-          label: "商品管理",
-          icon: "video-play",
-          url: "MallManage/MallManage",
-        },
-        {
-          path: "/user",
-          name: "user",
-          label: "用户管理",
-          icon: "user",
-          url: "UserManage/UserManage",
-        },
-        {
-          label: "其他",
-          icon: "location",
-          children: [
-            {
-              path: "/page1",
-              name: "page1",
-              label: "页面1",
-              icon: "setting",
-              url: "Other/PageOne",
-            },
-            {
-              path: "/page2",
-              name: "page2",
-              label: "页面2",
-              icon: "setting",
-              url: "Other/PageTwo",
-            },
-          ],
-        },
-      ],
+      menu: [],
     };
   },
   methods: {
@@ -119,16 +77,19 @@ export default {
   computed: {
     // 筛选并返回没有子路由的数组
     noChildren() {
-      return this.menu.filter((item) => !item.children);
+      return this.asyncMenu.filter((item) => !item.children);
     },
     // 筛选并返回有子路由的数组
     hasChildren() {
-      return this.menu.filter((item) => item.children);
+      return this.asyncMenu.filter((item) => item.children);
     },
     // 侧边栏是否打开
     isCollapse() {
       return this.$store.state.tab.isCollapse;
     },
+    asyncMenu(){
+      return this.$store.state.tab.menu
+    }
   },
 };
 </script>
