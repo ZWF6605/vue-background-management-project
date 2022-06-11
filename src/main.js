@@ -93,7 +93,10 @@ router.beforeEach((to, from, next) => {
     next({
       name: 'login'
     })
-  }else{
+  }else if(token && to.name === 'login'){
+    next({name:"home"})
+  }
+  else{
     next()
   }
 })
@@ -102,4 +105,8 @@ new Vue({
   store,
   router,
   render: h => h(App),
+  created(){
+    store.commit("addMenu",router);
+
+  }
 }).$mount('#app')
